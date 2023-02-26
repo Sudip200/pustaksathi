@@ -1,0 +1,44 @@
+.h1 {
+    font-size: 2rem;
+    text-align: center;
+   
+  }
+  
+  .LoginForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    max-width: 500px;
+  }
+  
+  .label {
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  .input {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    border: solid black 2px;
+    width: 20rem;
+  }
+  
+  .button[type="submit"], .button {
+    background-color: #4285f4;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  
