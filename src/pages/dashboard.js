@@ -18,21 +18,21 @@ export default function DashBoard({user}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
+        <div style={{textAlign:'center'}}>
     <h1>Welcome {user.name} </h1>
     <div className='dashboard-container'>
       <h3>Upload Files</h3>
-      <Link href='/'>Go to Home</Link>
-      
+      <Link href="/" >Go to Home</Link>
       <h3>Your Uploaded Files</h3>
-      <div className='dashboard-items' style={{display:'flex',flexWrap:'wrap'}}>
+      </div>
+      <div className='dashboarditems' style={{display:'flex',flexWrap:'wrap',justifyContent:'center',gap:'15px',textAlign:'center'}}>
       {user.uploadedFiles.map((item)=>{
-          return(<div className='cheat-sheet'>
-           <h3>{item.name}</h3>
-           <a href={item.link} >Download</a>
-          <h4>Price:{item.price}</h4>
+          return(<div className='cheatsheet' style={{width:'200px',height:'300px',padding:'20px',boxShadow:'10px 10px' ,backgroundColor:'#ccccff'}}>
+           <h3 style={{border:'2px solid black'}}>{item.name}</h3>
+           <a href={item.link} style={{padding:'9px', background:'black', color:'white',textDecoration:'none'}} >Download</a>
+            <h4>Price:{item.price}</h4>
            <p>{item.category}</p>
            <p>Created By {item.author}</p>
-      
            {item.verified==="yes"?<p style={{color:'green'}}>verified</p>:<p style={{color:'red'}}>Not verified</p>}
           </div>)
         })}
@@ -44,28 +44,38 @@ export default function DashBoard({user}) {
   )
 }
 
+function UploadForm(){
+  return(
+    <>
+    <div>
+      
+    </div>
+    </>
+  )
+}
+
 export async function getServerSideProps({ query }) {
   //const { user } = query;
   try {
-    const { user } = query;
-    const response = await axios.get('https://sharenote-api.onrender.com/allFiles');
-    const res= await axios.get(`https://sharenote-api.onrender.com/user/${user}`)
-    const data = response.data;
-    const userdetails=res.data
+    const { userid } = query;
+    //const response = await axios.get('https://sharenote-api.onrender.com/allFiles');
+    const response= await axios.get(`https://sharenote-api.onrender.com/user/${userid}`)
+    const user = response.data;
+   
     return {
       props: {
-        data,
-        user,
-        userdetails
+        
+        user
+        
       },
     };
   } catch (error) {
     console.log(error);
     return {
       props: {
-        data: [],
-        user:'Please Sign In',
-        userdetails:'none'
+       
+        user:{},
+       
       },
     };
   }

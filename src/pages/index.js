@@ -8,8 +8,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home({user,data,userdetails}) {
-  const router=useRouter
+export default function Home({data,userdetails}) {
+  const router=useRouter()
   const shareData = {
     title: '',
     text: 'Check out this link:',
@@ -33,17 +33,21 @@ export default function Home({user,data,userdetails}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.head}>
-      <h1 className={styles.h1}>Welcome to ShareYourNotes</h1>
+      <h1 className={styles.h1}>ShareYourNotes</h1>
       { userdetails && <h3>Welcome {userdetails.name}</h3> }
         <h3 className={styles.h3}>CheatSheets and notes available currently<br/>
         Please Fill This Form <a href='https://docs.google.com/forms/d/e/1FAIpQLSeCsgCXWN4r_c4lrdlAv1suFWBeKw_krgNu5WaUFJ0l0Fvc7Q/viewform?usp=sf_link'>Link</a>
        </h3>
-       <button onClick={()=>{
+       <div style={{display:'flex',flexDirection:'row',justifyContent:'center',gap:'20px'}}>
+       {userdetails!='none' && <a onClick={()=>{
          router.push({
           pathname: '/dashboard',
-          query: { user:userdetails},
+          query: { userid:userdetails._id},
          })
-        }} style={{ backgroundColor: '#4285f4', color: '#fff', fontSize: '1.1rem', padding: '0.5rem 1rem', borderRadius: '5px', border: 'none', cursor: 'pointer' }} >Go to DashBoard</button>
+        }}  style={{fontSize:'20px',textDecoration:'none',borderBottom:'2px solid blue',width:'100px',background:'white'}}>Go to DashBoard</a>}
+        <Link href='/login' style={{fontSize:'20px',textDecoration:'none',borderBottom:'2px solid blue',width:'100px'}}>Login</Link>
+        <Link href='/register' style={{fontSize:'20px',textDecoration:'none',borderBottom:'2px solid blue',width:'100px'}}>Register</Link>
+</div>
        <p className={styles.p} id="blink" style={{animation:'blink 2s linear infinite'}}>After Clicking Download Link Please Request Access Permission .You may have to wait to get permission as its a manual process</p>
        </div>
       <div className={styles.App}>
@@ -70,31 +74,59 @@ export default function Home({user,data,userdetails}) {
 }
 
 export async function getServerSideProps({ query }) {
-  //const { user } = query;
-  try {
-    const { user } = query;
+  
+  const { user } = query;
+
+  if(!user){
+    const response = await axios.get('https://sharenote-api.onrender.com/allFiles');
+    const data = response.data;
+    return{
+      props:{
+        data,
+      userdetails:'none'
+      }
+      
+    }
+  }else{
     const response = await axios.get('https://sharenote-api.onrender.com/allFiles');
     const res= await axios.get(`https://sharenote-api.onrender.com/user/${user}`)
+   const userdetails=res.data
     const data = response.data;
-    const userdetails=res.data
-    return {
-      props: {
+    return{
+      props:{
         data,
-        user,
         userdetails
-      },
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      props: {
-        data: [],
-        user:'Please Sign In',
-        userdetails:'none'
-      },
-    };
+      }
+      
+    }
   }
+  // try {
+  //   const { user } = query;
+    
+  //   const response = await axios.get('https://sharenote-api.onrender.com/allFiles');
+  //   const res= await axios.get(`https://sharenote-api.onrender.com/user/${user}`)
+   
+   
+  //   return {
+  //     props: {
+  //       data,
+  //       userdetails
+  //     },
+  //   };
+  // } catch (error) {
+  //   console.log(error);
+  //   if(!user){
+  //     return {
+  //       props: {
+  //         data:data,
+  //         userdetails:'none'
+  //       },
+  //     };
+  //   }
+    
+  // }
 }
+
 
 // export async function getStaticProps({query}){
 //   let data;
