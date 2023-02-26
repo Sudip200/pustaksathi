@@ -56,12 +56,19 @@ export default function Home({data,userdetails}) {
           return(<div className={styles.cheatsheet} style={{width:'200px' ,height:'400px',textAlign:'center'}}>
            <h3 className={styles.h3}>{item.name}</h3>
            {shareData.text=item.name}
-           <a href={item.link} className={styles.a} >Download</a>
+           <a href={item.link} 
+            
+            >Download</a>
+            <button onClick={()=>{
+              router.push({
+                pathname:'/file',
+                query:{ ItemObject: JSON.stringify(item) }
+              })
+            }} className={styles.a}>Download</button>
            <button id='share' onClick={share} className={styles.button}>Share</button>
           <h4 className={styles.h4}>Price:{item.price}</h4>
            <p className={styles.p}>{item.category}</p>
            <p className={styles.p}>Created By {item.author}</p>
-      
            {item.verified==="yes"?<p style={{color:'green'}} className={styles.p}>verified</p>:<p style={{color:'red'}} className={styles.p}>Not verified</p>}
           </div>)
         })}
