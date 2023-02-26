@@ -53,7 +53,7 @@ export default function Home({data,userdetails}) {
       <div className={styles.App}>
        <div className={styles.cheatsheetcontainer}>
         {data.map((item)=>{
-          return(<div className={styles.cheatsheet}>
+          return(<div className={styles.cheatsheet} style={{width:'200px' ,height:'400px',textAlign:'center'}}>
            <h3 className={styles.h3}>{item.name}</h3>
            {shareData.text=item.name}
            <a href={item.link} className={styles.a} >Download</a>

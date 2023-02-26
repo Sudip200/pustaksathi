@@ -17,11 +17,12 @@ export default function DashBoard({user}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
+      <div >
         <div style={{textAlign:'center'}}>
     <h1>Welcome {user.name} </h1>
-    <div className='dashboard-container'>
+    <div className='dashboard-container' style={{}} >
       <h3>Upload Files</h3>
+      <UploadForm userid={user._id} />
       <Link href="/" >Go to Home</Link>
       <h3>Your Uploaded Files</h3>
       </div>
@@ -44,11 +45,80 @@ export default function DashBoard({user}) {
   )
 }
 
-function UploadForm(){
+function UploadForm({userid}){
+  const [name, setName] = useState('');
+  const [category, setCategory] = useState('');
+  const [link, setLink] = useState('');
+  const [price, setPrice] = useState('');
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post(`https://sharenote-api.onrender.com/uploadFiles/${userId}`, {
+      name,
+      category,
+      link,
+      price,
+    })
+      .then((response) => {
+      //  console.log(response);
+        // Handle successful response here
+        if(response.data.message==='File uploaded successfully'){
+          alert("File Uploadeed Succesfully")
+          
+
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        // Handle error response here
+      });
+  };
+
   return(
     <>
-    <div>
-      
+    <div style={{padding:'30px',background:'#b3d9ff',boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',width:'20em',display:'flex',justifyContent:'center',margin:'auto'}}>
+    <form onSubmit={handleSubmit} className="upload-form" style={{display:'flex',flexDirection:'column',gap:'20px',justifyContent:'center'}}>
+      <label htmlFor="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+        style={{width:'300px',height:'30px'}}
+        className="form-input"
+      />
+
+      <label htmlFor="category">Category:</label>
+      <input
+        type="text"
+        id="category"
+        style={{width:'300px',height:'30px'}}
+        value={category}
+        onChange={(event) => setCategory(event.target.value)}
+        className="form-input"
+      />
+
+      <label htmlFor="link">Link:</label>
+      <input
+        type="text"
+        id="link"
+        style={{width:'300px',height:'30px'}}
+        value={link}
+        onChange={(event) => setLink(event.target.value)}
+        className="form-input"
+      />
+
+      <label htmlFor="price">Price:</label>
+      <input
+        type="text"
+        id="price"
+        style={{width:'300px',height:'30px'}}
+        value={price}
+        onChange={(event) => setPrice(event.target.value)}
+        className="form-input"
+      />
+
+      <button type="submit" className="form-submit-button" style={{padding:'9px', background:'black', color:'white',textDecoration:'none'}}>Upload File</button>
+    </form>
     </div>
     </>
   )
