@@ -7,27 +7,27 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-const inter = Inter({ subsets: ['latin'] })
+
 
 export default function LogIn() {
 
   const [email, setEmail] = useState('');
-  //const [route,setRoute]=useState('login')
+  const [name,setName]=useState('')
+  const [show,setShow]=useState(false)
   const [password, setPassword] = useState('');
-
-  const [msg,setMsg]=useState('');
   const router = useRouter();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setMsg("Please Wait")
-   
-    fetch('https://sharenote-api.onrender.com/loginUser', {
+    console.log(email,password);
+      setShow('Please Wait....')
+    fetch('https://sharenote-api.onrender.com/registerUser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        name,
         email,
         password,
       })
@@ -37,7 +37,7 @@ export default function LogIn() {
       })
       .then((data) => {
         console.log(data);
-        if (data.message === "User logged in successfully") {
+        if (data.msg === "Inserted") {
           console.log(data.user);
           router.push({
             pathname: '/',
@@ -46,8 +46,8 @@ export default function LogIn() {
         }
       })
       .catch((error) => {
-        //console.error(error);
-       alert(error)
+        console.error(error);
+        // Handle error response here
       });
   };
 
@@ -59,14 +59,20 @@ export default function LogIn() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="images/logo.png" />
       </Head>
-      
       <h1 className={styles.h1}>PustakSathi</h1>
-      
+      <h3>{show}</h3>
       <div className={styles.LoginForm}>
       <Image src="/images/logo.png" width='100' height='100' />
    <div>
-      <form onSubmit={handleSubmit} className={styles.form} style={{textAlign:'center'}}>
-     
+      <form onSubmit={handleSubmit} className={styles.form}>
+      <label htmlFor="name" className={styles.label}>Name:</label>
+        <input
+          type="text"
+          id="text"
+          value={name}
+          className={styles.input}
+          onChange={(event) => setName(event.target.value)}
+        />
         <label htmlFor="email" className={styles.label}>Email:</label>
         <input
           type="email"
@@ -86,11 +92,11 @@ export default function LogIn() {
           className={styles.input}
           onChange={(event) => setPassword(event.target.value)}
         />
-       {<h3>{msg}</h3>}
-        <button type="submit" style={{ backgroundColor: '#4285f4', color: '#fff', fontSize: '1.1rem', padding: '0.5rem 1rem', borderRadius: '5px', border: 'none', cursor: 'pointer',textAlign:'center' }}  >Submit</button>
+
+        <button type="submit" style={{ backgroundColor: '#4285f4', color: '#fff', fontSize: '1.1rem', padding: '0.5rem 1rem', borderRadius: '5px', border: 'none', cursor: 'pointer' }}   >Submit</button>
       </form>
-      <button   className={styles.button} style={{ backgroundColor: '#4285f4', color: '#fff', fontSize: '1.1rem', padding: '0.5rem 1rem', borderRadius: '5px', border: 'none', cursor: 'pointer' }}><Link href="/register">Register Here</Link></button>
-      </div> 
+      <button onClick={()=>{console.log('hello')}  }  className={styles.button} style={{ backgroundColor: '#4285f4', color: '#fff', fontSize: '1.1rem', padding: '0.5rem 1rem', borderRadius: '5px', border: 'none', cursor: 'pointer' }}><Link href="/login">Login Here</Link></button>
+      </div>
 
     </div>
     </>

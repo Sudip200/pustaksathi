@@ -1,15 +1,15 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import styles from '@/styles/file.module.css'
 import axios  from 'axios'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-const inter = Inter({ subsets: ['latin'] })
 
-export default function File({item}) {
-  
+
+export default function File({item,login}) {
+  const url="https://cdn.pixabay.com/photo/2016/12/07/15/57/blur-1889747_1280.jpg"
   return (
     <>
       <Head>
@@ -18,16 +18,18 @@ export default function File({item}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-     <div style={{display:'flex',flexDirection:'column',gap:'1em',justifyItems:'center',width:'100%'}}>
-<div style={{background:'#ccccff',padding:'30px',width:'30em'}}>
-    <h4>{item.name}</h4>
+     <div style={{padding:'100px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center'}} className={styles.container}>
+    <div style={{background:'white',padding:'30px',width:'20em',fontFamily:'sans-serif,roboto',textAlign:'center',borderRadius:'1px',boxShadow:'0 0 5px rgba(0, 0, 0, 0.5)'}}>
+    <h2>{item.name}</h2>
     <h3>Price:{item.price}<br/>verified:{item.verified}</h3>
     <h3>Uploaded by {item.author}</h3>
     <h3>Category   {item.category}</h3>
-    <a href={item.link}>Download</a>
+    <div style={{display:'flex',flexDirection:'column',gap:'10'}}>
+    <a href='/register' style={{padding:'20px',textDecoration:'none',backgroundColor:'black',color:'white',fontSize:'1.2em'}}>Register</a><br/>
+    <a href={item.link} style={{padding:'10px',textDecoration:'none',backgroundColor:'black',color:'white'}}>Download</a>
+    </div>
 </div>
-       <div><iframe src={item.link} title={item.name} style={{width:'40rem',height:'50rem'}}></iframe>
-       </div> 
+        
         </div>
     </>
   )
@@ -37,10 +39,12 @@ export async function getServerSideProps({ query }) {
   
     
     const item=JSON.parse(query.ItemObject)
+    const login =query
    // let data = [];
   
    return {props:{
-     item
+     item,
+     login
    }}
 }
 

@@ -6,7 +6,7 @@ import axios  from 'axios'
 import Link from 'next/link'
 import { useState } from 'react'
 const inter = Inter({ subsets: ['latin'] })
-
+//import firebase from 'firebase'
 export default function DashBoard({user}) {
  
   return (
