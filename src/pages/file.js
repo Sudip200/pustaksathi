@@ -27,12 +27,13 @@ export default function File({item,login}) {
     <h3>Uploaded by {item.author}</h3>
     <h3>Category   {item.category}</h3>
     <div style={{display:'flex',flexDirection:'column',gap:'10'}}>
-    <button  onClick={()=>{
+    {/* <button  onClick={()=>{
       console.log("fdd")
       setShowpop(true)
-    }}style={{padding:'20px',textDecoration:'none',backgroundColor:'black',color:'white',fontSize:'1.2em'}}>Register</button><br/>
+    }}style={{padding:'20px',textDecoration:'none',backgroundColor:'black',color:'white',fontSize:'1.2em'}}>Register</button><br/> */}
     {/* {showpop && <Popup/>}
     {false && */}
+     <Link href='/register'>Register </Link>
      <a href={item.link} style={{padding:'10px',textDecoration:'none',backgroundColor:'black',color:'white'}} >Download</a>
     </div>
 </div>
