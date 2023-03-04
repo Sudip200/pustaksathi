@@ -52,7 +52,7 @@ function UploadForm({userid}){
   const [price, setPrice] = useState('');
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post(`https://sharenote-api.onrender.com/uploadFiles/${userId}`, {
+    axios.post(`https://sharenote-api.onrender.com/uploadFiles/${userid}`, {
       name,
       category,
       link,
@@ -69,6 +69,7 @@ function UploadForm({userid}){
       })
       .catch((error) => {
         console.error(error);
+        alert("errot",error)
         // Handle error response here
       });
   };
