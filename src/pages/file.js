@@ -10,9 +10,7 @@ import { useRouter } from 'next/router'
 
 export default function File({item}) {
   const url="https://cdn.pixabay.com/photo/2016/12/07/15/57/blur-1889747_1280.jpg"
-
   const [islogin,setLogin]=useState(false)
-
   const [showpop,setShowpop]=useState(false)
   return (
     <>
@@ -22,16 +20,20 @@ export default function File({item}) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/images/logo.png" />
       </Head>
-     <div style={{padding:'100px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center'}} className={styles.container}>
+    
+     <div style={{padding:'100px',margin:'auto',display:'flex',justifyContent:'center',alignItems:'center',flexDirection:'column'}} className={styles.container}>
+     <Link href='/' style={{marginBottom:'20px',padding:'20px',background:'blue',textDecoration:'none',color:'white'}}>Go to Home Page</Link>
     <div style={{background:'white',padding:'30px',width:'20em',fontFamily:'sans-serif,roboto',textAlign:'center',borderRadius:'1px',boxShadow:'0 0 5px rgba(0, 0, 0, 0.5)'}}>
     <h2>{item.name}</h2>
     <h3>Price:{item.price}<br/>verified:{item.verified}</h3>
     <h3>Uploaded by {item.author}</h3>
     <h3>Category   {item.category}</h3>
     <div style={{display:'flex',flexDirection:'column',gap:'10'}}>
-   {!islogin && <button  onClick={()=>{ setShowpop(true) }} style={{padding:'20px',textDecoration:'none',backgroundColor:'black',color:'white',fontSize:'1.2em'}}>Register</button> }
+     {!islogin && <button  onClick={()=>{ setShowpop(true) }} style={{padding:'20px',textDecoration:'none',backgroundColor:'black',color:'white',fontSize:'1.2em'}}>Register</button> }
     {showpop && <Popup islogin={islogin} setLogin={setLogin} setShowpop={setShowpop} showpop={showpop}  />}
-    {islogin && <a href={item.link} style={{padding:'10px',textDecoration:'none',backgroundColor:'black',color:'white'}} >Download</a>}
+    
+    {islogin && (item.name==="Data Structure & Algorithms Short Notes"?<a href="https://upi.infomattic.com/CustomPayment.php?link_id=30d1ec8ccf32ddf37f49fd0ded9e395b" style={{padding:'10px',textDecoration:'none',backgroundColor:'black',color:'white'}} >Purchase</a>:<a href={item.link} style={{padding:'10px',textDecoration:'none',backgroundColor:'black',color:'white'}}>Download</a>)}
+    
     </div>
 </div>
         

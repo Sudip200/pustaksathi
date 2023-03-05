@@ -110,7 +110,7 @@ function UploadForm({userid}){
 
       <label htmlFor="price">Price:</label>
       <input
-        type="text"
+        type="number"
         id="price"
         style={{width:'300px',height:'30px'}}
         value={price}
