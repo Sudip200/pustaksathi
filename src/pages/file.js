@@ -33,7 +33,11 @@ export default function File({item}) {
     {showpop && <Popup islogin={islogin} setLogin={setLogin} setShowpop={setShowpop} showpop={showpop}  />}
     
     {islogin && (item.name==="Data Structure & Algorithms Short Notes"?<a href="https://upi.infomattic.com/CustomPayment.php?link_id=30d1ec8ccf32ddf37f49fd0ded9e395b" style={{padding:'10px',textDecoration:'none',backgroundColor:'black',color:'white'}} >Purchase</a>:<a href={item.link} style={{padding:'10px',textDecoration:'none',backgroundColor:'black',color:'white'}}>Download</a>)}
-    
+    <p>
+      By Purchasing or Downloading you are agreeing to this terms and conditions--
+      Not verified means the notes is not verified by any expert may contains mistakes ,
+      As Our team is very small many technical error can be there ,You can always contact us for this.
+      </p>
     </div>
 </div>
         
