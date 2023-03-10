@@ -63,7 +63,7 @@ export default function Home({data,userdetails}) {
             <button onClick={()=>{
               router.push({
                 pathname:'/file',
-                query:{ ItemObject: JSON.stringify(item),login:userdetails? true:false }
+                query:{ ItemObject: JSON.stringify(item),user:JSON.stringify(userdetails) }
               })
             }} className={styles.a}>Download</button>
            <button id='share' onClick={share} className={styles.button}>Share</button>
