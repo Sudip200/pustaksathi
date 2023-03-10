@@ -8,10 +8,11 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 
 
-export default function File({item}) {
+export default function File({item,user}) {
   const url="https://cdn.pixabay.com/photo/2016/12/07/15/57/blur-1889747_1280.jpg"
   const [islogin,setLogin]=useState(false)
   const [showpop,setShowpop]=useState(false)
+  const router=useRouter()
   return (
     <>
       <Head>
@@ -25,14 +26,18 @@ export default function File({item}) {
      <Link href='/' style={{marginBottom:'20px',padding:'20px',background:'blue',textDecoration:'none',color:'white'}}>Go to Home Page</Link>
     <div style={{background:'white',padding:'30px',width:'20em',fontFamily:'sans-serif,roboto',textAlign:'center',borderRadius:'1px',boxShadow:'0 0 5px rgba(0, 0, 0, 0.5)'}}>
     <h2>{item.name}</h2>
-    <h3>Price:{item.price}<br/>verified:{item.verified}</h3>
-    <h3>Uploaded by {item.author}</h3>
+    <h3 style={{color:'green'}}>Price:{item.price} rs<br/>verified:{item.verified}</h3>
+    {/* <button onClick={()=>{router.push({
+      pathname:'/profile',
+      query:{user:user}
+})}} >Uploaded by {item.author}</button> */}
+<h3 style={{color:'red'}}>Uploaded by {item.author}</h3>
     <h3>Category   {item.category}</h3>
     <div style={{display:'flex',flexDirection:'column',gap:'10'}}>
      {!islogin && <button  onClick={()=>{ setShowpop(true) }} style={{padding:'20px',textDecoration:'none',backgroundColor:'black',color:'white',fontSize:'1.2em'}}>Register</button> }
     {showpop && <Popup islogin={islogin} setLogin={setLogin} setShowpop={setShowpop} showpop={showpop}  />}
     
-    {islogin && (item.name==="Data Structure & Algorithms Short Notes"?<a href="https://upi.infomattic.com/CustomPayment.php?link_id=30d1ec8ccf32ddf37f49fd0ded9e395b" style={{padding:'10px',textDecoration:'none',backgroundColor:'black',color:'white'}} >Purchase</a>:<a href={item.link} style={{padding:'10px',textDecoration:'none',backgroundColor:'black',color:'white'}}>Download</a>)}
+    {islogin && (item.name==="CSS Short Notes"?<a href="https://upi.infomattic.com/CustomPayment.php?link_id=f6e8f3a6b1ade5050eb1409bbbae075b" style={{padding:'10px',textDecoration:'none',backgroundColor:'black',color:'white'}} >Purchase</a>:<a href={item.link} style={{padding:'10px',textDecoration:'none',backgroundColor:'black',color:'white'}}>Download</a>)}
     <p>
       By Purchasing or Downloading you are agreeing to this terms and conditions--
       Not verified means the notes is not verified by any expert may contains mistakes ,
@@ -126,12 +131,12 @@ export async function getServerSideProps({ query }) {
   
     
     const item=JSON.parse(query.ItemObject)
-    const login =query
+    const user =JSON.parse(query.user)
    // let data = [];
   
    return {props:{
      item,
-     login
+     user
    }}
 }
 
